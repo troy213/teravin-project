@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import DataList from './components/DataList'
+import Form from './components/Form'
+import { useSelector, useDispatch } from 'react-redux'
+import { formActions } from './store/form-slice'
 
-function App() {
+const App = () => {
+  const showForm = useSelector((state) => state.form.showForm)
+  const dispatch = useDispatch()
+
+  const handleShowForm = () => {
+    dispatch(formActions.setShowForm())
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='app'>
+      {!showForm ? (
+        <>
+          <h1>Teravin Test React.JS</h1>
+          <button onClick={handleShowForm}>Add data</button>
+          <DataList />
+        </>
+      ) : (
+        <Form />
+      )}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
