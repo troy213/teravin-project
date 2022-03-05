@@ -5,7 +5,7 @@ const DotProgress = () => {
 
       <ul>
         <li>Data Personal</li>
-        <li>Riwayat Pekerjaan</li>
+        <li>Riwayat Pendidikan</li>
         <li>Pengalaman Kerja</li>
         <li>Keahlian</li>
       </ul>
