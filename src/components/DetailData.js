@@ -17,7 +17,7 @@ const DetailData = ({ selectedData }) => {
     <div className='detail-data-container'>
       <h1 className='detail-data-title'>Detail Data</h1>
       <section className='detail-data'>
-        <h3>Personal</h3>
+        <p className='form-title bold mb-1'>Personal</p>
         <div className='detail-data-wrapper'>
           <p>Nama</p>
           <p>{personal.nama}</p>
@@ -45,7 +45,7 @@ const DetailData = ({ selectedData }) => {
         <div className='detail-data-wrapper'>
           <p>Hobi</p>
           {personal.hobi.length > 0 ? (
-            <>
+            <div>
               {personal.hobi.map((hobi) => {
                 const { id, value } = hobi
                 return (
@@ -54,7 +54,7 @@ const DetailData = ({ selectedData }) => {
                   </div>
                 )
               })}
-            </>
+            </div>
           ) : (
             <p>-</p>
           )}
@@ -62,7 +62,7 @@ const DetailData = ({ selectedData }) => {
         <div className='detail-data-wrapper'>
           <p>Sosial Media</p>
           {personal.sosialMedia.length > 0 ? (
-            <>
+            <div>
               {personal.sosialMedia.map((sosialMedia) => {
                 const { id, value } = sosialMedia
                 return (
@@ -73,14 +73,14 @@ const DetailData = ({ selectedData }) => {
                   </div>
                 )
               })}
-            </>
+            </div>
           ) : (
             <p>-</p>
           )}
         </div>
       </section>
       <section className='detail-data'>
-        <h3>Riwayat Pendidikan</h3>
+        <p className='form-title bold mb-1'>Riwayat Pendidikan</p>
         <>
           {riwayat.riwayatList.length > 0 ? (
             <>
@@ -115,7 +115,7 @@ const DetailData = ({ selectedData }) => {
         </>
       </section>
       <section className='detail-data'>
-        <h3>Pengalaman Kerja</h3>
+        <p className='form-title bold mb-1'>Pengalaman Kerja</p>
         <>
           {pengalaman.pengalamanList.length > 0 ? (
             <>
@@ -150,7 +150,7 @@ const DetailData = ({ selectedData }) => {
         </>
       </section>
       <section className='detail-data'>
-        <h3>Keahlian</h3>
+        <p className='form-title bold mb-1'>Keahlian</p>
         <>
           {keahlian.keahlianList.length > 0 ? (
             <>

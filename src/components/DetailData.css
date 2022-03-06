@@ -10,6 +10,7 @@
 
 .detail-data-title {
   color: var(--primary-color);
+  margin-top: 2rem;
 }
 
 .detail-data h3 {
@@ -40,4 +41,12 @@
   border-radius: 1rem;
   box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.2);
   overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .detail-data-wrapper {
+    display: grid;
+    grid-template-columns: 35% 65%;
+    gap: 1rem;
+  }
 }

@@ -77,4 +77,7 @@ const DotProgress = () => {
   )
 }
 
+// thanks to Ahmad Almasri in codepen for the Dot Check Progress Bar source code
+// link to his codepen https://codepen.io/vader13/pen/vYYEgYL
+
 export default DotProgress

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { formActions } from '../store/form-slice'
 import './FormKeahlian.css'
 
-const FormKeahlian = () => {
+const FormKeahlian = ({ onOpen }) => {
   const [keahlianList, setKeahlianList] = useState([
     {
       id: 0,
@@ -32,7 +32,8 @@ const FormKeahlian = () => {
 
     if (isEmpty) {
       e.preventDefault()
-      alert('Data masih ada yang kosong')
+      dispatch(formActions.setModalValue('Data masih ada yang kosong'))
+      onOpen()
     } else {
       dispatch(formActions.setKeahlian({ keahlianList }))
       dispatch(formActions.saveToLocalStorage())
@@ -67,7 +68,7 @@ const FormKeahlian = () => {
       <div className='form-keahlian-container'>
         <form>
           <div>
-            <p className='bold mb-1'>Keahlian</p>
+            <p className='form-title bold mb-1'>Keahlian</p>
             {keahlianList.map((keahlian) => {
               const { id } = keahlian
               return (
@@ -79,14 +80,22 @@ const FormKeahlian = () => {
                 />
               )
             })}
-            <button onClick={tambahKeahlian} className='btn btn-secondary'>
-              Tambah
-            </button>
-            {keahlianList.length > 1 && (
-              <button onClick={hapusKeahlian} className='btn btn-danger ml-1'>
-                Hapus
-              </button>
-            )}
+            <div className='form-wrapper'>
+              <div></div>
+              <div className='btn-wrapper'>
+                <button onClick={tambahKeahlian} className='btn btn-secondary'>
+                  Tambah
+                </button>
+                {keahlianList.length > 1 && (
+                  <button
+                    onClick={hapusKeahlian}
+                    className='btn btn-danger ml-1'
+                  >
+                    Hapus
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
         </form>
       </div>
@@ -109,15 +118,17 @@ const KeahlianComponent = ({ id, keahlianList, setKeahlianList }) => {
 
   return (
     <div className='keahlian-container'>
-      <label htmlFor={`keahlian-${id}`}>Keahlian {id + 1}</label>
-      <input
-        type='text'
-        id={`keahlian-${id}`}
-        onChange={(e) => handleKeahlianValue(e)}
-        value={keahlianList[id].value}
-        placeholder={`Masukan Keahlian ${id + 1}`}
-        className='input'
-      />
+      <div className='form-wrapper'>
+        <label htmlFor={`keahlian-${id}`}>Keahlian {id + 1}</label>
+        <input
+          type='text'
+          id={`keahlian-${id}`}
+          onChange={(e) => handleKeahlianValue(e)}
+          value={keahlianList[id].value}
+          placeholder={`Masukan Keahlian ${id + 1}`}
+          className='input'
+        />
+      </div>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { formActions } from '../store/form-slice'
 import './FormRiwayat.css'
 
-const FormRiwayat = () => {
+const FormRiwayat = ({ onOpen }) => {
   const [riwayatList, setRiwayatList] = useState([
     {
       id: 0,
@@ -35,7 +35,8 @@ const FormRiwayat = () => {
 
     if (isEmpty) {
       e.preventDefault()
-      alert('Data masih ada yang kosong')
+      dispatch(formActions.setModalValue('Data masih ada yang kosong'))
+      onOpen()
     } else {
       dispatch(formActions.setRiwayat({ riwayatList }))
       dispatch(formActions.setCurrentFormPosition(3))
@@ -73,7 +74,7 @@ const FormRiwayat = () => {
       <div className='form-riwayat-container'>
         <form>
           <div>
-            <p className='bold mb-1'>Riwayat Pendidikan</p>
+            <p className='form-title bold mb-1'>Riwayat Pendidikan</p>
             {riwayatList.map((riwayat) => {
               const { id } = riwayat
               return (
@@ -85,14 +86,22 @@ const FormRiwayat = () => {
                 />
               )
             })}
-            <button onClick={tambahRiwayat} className='btn btn-secondary'>
-              Tambah
-            </button>
-            {riwayatList.length > 1 && (
-              <button onClick={hapusRiwayat} className='btn btn-danger ml-1'>
-                Hapus
-              </button>
-            )}
+            <div className='form-wrapper'>
+              <div></div>
+              <div className='btn-wrapper'>
+                <button onClick={tambahRiwayat} className='btn btn-secondary'>
+                  Tambah
+                </button>
+                {riwayatList.length > 1 && (
+                  <button
+                    onClick={hapusRiwayat}
+                    className='btn btn-danger ml-1'
+                  >
+                    Hapus
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
         </form>
       </div>
@@ -117,48 +126,56 @@ const RiwayatComponent = ({ id, riwayatList, setRiwayatList }) => {
     <div>
       <p>Riwayat Pendidikan {id + 1}</p>
       <div className='riwayat-container'>
-        <label htmlFor='nama-institusi'>Nama Sekolah/Universitas</label>
-        <input
-          type='text'
-          id='nama-institusi'
-          onChange={(e) => handleRiwayatValue('namaInstitusi', e)}
-          value={riwayatList[id].namaInstitusi}
-          placeholder='Masukan Nama Sekolah/Universitas'
-          className='input'
-        />
-        <label htmlFor='jurusan'>Jurusan</label>
-        <input
-          type='text'
-          id='jurusan'
-          onChange={(e) => handleRiwayatValue('jurusan', e)}
-          value={riwayatList[id].jurusan}
-          placeholder='Masukan Jurusan'
-          className='input'
-        />
-        <label htmlFor='tahun-masuk'>Tahun Masuk</label>
-        <input
-          type='number'
-          id='tahun-masuk'
-          onChange={(e) => handleRiwayatValue('tahunMasuk', e)}
-          value={riwayatList[id].tahunMasuk}
-          placeholder='Masukan Tahun Masuk'
-          min='1900'
-          max={new Date().getFullYear()}
-          step='1'
-          className='input'
-        />
-        <label htmlFor='tahun-keluar'>Tahun Keluar</label>
-        <input
-          type='number'
-          id='tahun-keluar'
-          onChange={(e) => handleRiwayatValue('tahunKeluar', e)}
-          value={riwayatList[id].tahunKeluar}
-          placeholder='Masukan Tahun Keluar'
-          min='1900'
-          max={new Date().getFullYear()}
-          step='1'
-          className='input'
-        />
+        <div className='form-wrapper'>
+          <label htmlFor='nama-institusi'>Nama Institusi</label>
+          <input
+            type='text'
+            id='nama-institusi'
+            onChange={(e) => handleRiwayatValue('namaInstitusi', e)}
+            value={riwayatList[id].namaInstitusi}
+            placeholder='Masukan Nama Sekolah/Universitas'
+            className='input'
+          />
+        </div>
+        <div className='form-wrapper'>
+          <label htmlFor='jurusan'>Jurusan</label>
+          <input
+            type='text'
+            id='jurusan'
+            onChange={(e) => handleRiwayatValue('jurusan', e)}
+            value={riwayatList[id].jurusan}
+            placeholder='Masukan Jurusan'
+            className='input'
+          />
+        </div>
+        <div className='form-wrapper'>
+          <label htmlFor='tahun-masuk'>Tahun Masuk</label>
+          <input
+            type='number'
+            id='tahun-masuk'
+            onChange={(e) => handleRiwayatValue('tahunMasuk', e)}
+            value={riwayatList[id].tahunMasuk}
+            placeholder='Masukan Tahun Masuk'
+            min='1900'
+            max={new Date().getFullYear()}
+            step='1'
+            className='input'
+          />
+        </div>
+        <div className='form-wrapper'>
+          <label htmlFor='tahun-keluar'>Tahun Keluar</label>
+          <input
+            type='number'
+            id='tahun-keluar'
+            onChange={(e) => handleRiwayatValue('tahunKeluar', e)}
+            value={riwayatList[id].tahunKeluar}
+            placeholder='Masukan Tahun Keluar'
+            min='1900'
+            max={new Date().getFullYear()}
+            step='1'
+            className='input'
+          />
+        </div>
       </div>
     </div>
   )

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { formActions } from '../store/form-slice'
 
-const FormPersonal = () => {
+const FormPersonal = ({ onOpen }) => {
   const [hobiList, setHobiList] = useState([{ id: 0, value: '' }])
   const [hobiCount, setHobiCount] = useState(1)
   const [sosialMediaList, setSosialMediaList] = useState([{ id: 0, value: '' }])
@@ -36,7 +36,8 @@ const FormPersonal = () => {
 
     if (isEmpty) {
       e.preventDefault()
-      alert('Data masih ada yang kosong')
+      dispatch(formActions.setModalValue('Data masih ada yang kosong'))
+      onOpen()
     } else if (validateEmail(personal.email)) {
       dispatch(formActions.setPersonalArray({ hobiList, sosialMediaList }))
       dispatch(formActions.setCurrentFormPosition(2))
@@ -46,7 +47,10 @@ const FormPersonal = () => {
       e.preventDefault()
       const email = document.getElementById('email')
       email.className = 'input is-empty'
-      alert('Format email yang anda masukan invalid')
+      dispatch(
+        formActions.setModalValue('Format email yang anda masukan invalid')
+      )
+      onOpen()
     }
   }
 
@@ -91,59 +95,72 @@ const FormPersonal = () => {
     <>
       <div className='form-personal-container'>
         <form>
-          <label htmlFor='nama-lengkap'>Nama Lengkap</label>
-          <input
-            type='text'
-            id='nama-lengkap'
-            onChange={(e) => handleChange('nama', e)}
-            value={personal.nama}
-            placeholder='Masukan Nama Lengkap'
-            className='input'
-          />
-          <label htmlFor='tempat-lahir'>Tempat Lahir</label>
-          <input
-            type='text'
-            id='tempat-lahir'
-            onChange={(e) => handleChange('tempatLahir', e)}
-            value={personal.tempatLahir}
-            placeholder='Masukan Tempat Lahir'
-            className='input'
-          />
-          <label htmlFor='tanggal-lahir'>Tanggal Lahir</label>
-          <input
-            type='date'
-            id='tanggal-lahir'
-            onChange={(e) => handleChange('tanggalLahir', e)}
-            value={personal.tanggalLahir}
-            className='input'
-          />
-          <label htmlFor='email'>Email</label>
-          <input
-            type='email'
-            id='email'
-            onChange={(e) => handleChange('email', e)}
-            value={personal.email}
-            placeholder='Masukan Email'
-            className='input'
-          />
-          <label htmlFor='phone-number'>Telepon</label>
-          <input
-            type='number'
-            id='phone-number'
-            onChange={(e) => handleChange('telepon', e)}
-            value={personal.telepon}
-            placeholder='Masukan Nomor Telepon'
-            className='input'
-          />
-          <label htmlFor='alamat'>Alamat</label>
-          <textarea
-            type='text'
-            id='alamat'
-            onChange={(e) => handleChange('alamat', e)}
-            value={personal.alamat}
-            placeholder='Masukan Alamat'
-            className='input'
-          />
+          <p className='form-title bold mb-1'>Data Personal</p>
+          <div className='form-wrapper'>
+            <label htmlFor='nama-lengkap'>Nama Lengkap</label>
+            <input
+              type='text'
+              id='nama-lengkap'
+              onChange={(e) => handleChange('nama', e)}
+              value={personal.nama}
+              placeholder='Masukan Nama Lengkap'
+              className='input'
+            />
+          </div>
+          <div className='form-wrapper'>
+            <label htmlFor='tempat-lahir'>Tempat Lahir</label>
+            <input
+              type='text'
+              id='tempat-lahir'
+              onChange={(e) => handleChange('tempatLahir', e)}
+              value={personal.tempatLahir}
+              placeholder='Masukan Tempat Lahir'
+              className='input'
+            />
+          </div>
+          <div className='form-wrapper'>
+            <label htmlFor='tanggal-lahir'>Tanggal Lahir</label>
+            <input
+              type='date'
+              id='tanggal-lahir'
+              onChange={(e) => handleChange('tanggalLahir', e)}
+              value={personal.tanggalLahir}
+              className='input'
+            />
+          </div>
+          <div className='form-wrapper'>
+            <label htmlFor='email'>Email</label>
+            <input
+              type='email'
+              id='email'
+              onChange={(e) => handleChange('email', e)}
+              value={personal.email}
+              placeholder='Masukan Email'
+              className='input'
+            />
+          </div>
+          <div className='form-wrapper'>
+            <label htmlFor='phone-number'>Telepon</label>
+            <input
+              type='tel'
+              id='phone-number'
+              onChange={(e) => handleChange('telepon', e)}
+              value={personal.telepon}
+              placeholder='Masukan Nomor Telepon'
+              className='input'
+            />
+          </div>
+          <div className='form-wrapper'>
+            <label htmlFor='alamat'>Alamat</label>
+            <textarea
+              type='text'
+              id='alamat'
+              onChange={(e) => handleChange('alamat', e)}
+              value={personal.alamat}
+              placeholder='Masukan Alamat'
+              className='input'
+            />
+          </div>
           <div className='hobi-container'>
             <p className='bold mb-1'>Hobi</p>
             {hobiList.map((hobi) => {
@@ -157,15 +174,18 @@ const FormPersonal = () => {
                 />
               )
             })}
-            <div className='btn-wrapper'>
-              <button onClick={tambahHobi} className='btn btn-secondary'>
-                Tambah
-              </button>
-              {hobiList.length > 1 && (
-                <button onClick={hapusHobi} className='btn btn-danger ml-1'>
-                  Hapus
+            <div className='form-wrapper'>
+              <div></div>
+              <div className='btn-wrapper'>
+                <button onClick={tambahHobi} className='btn btn-secondary'>
+                  Tambah
                 </button>
-              )}
+                {hobiList.length > 1 && (
+                  <button onClick={hapusHobi} className='btn btn-danger ml-1'>
+                    Hapus
+                  </button>
+                )}
+              </div>
             </div>
           </div>
           <div className='sosial-media-container'>
@@ -181,18 +201,24 @@ const FormPersonal = () => {
                 />
               )
             })}
-            <div className='btn-wrapper'>
-              <button onClick={tambahSosialMedia} className='btn btn-secondary'>
-                Tambah
-              </button>
-              {sosialMediaList.length > 1 && (
+            <div className='form-wrapper'>
+              <div></div>
+              <div className='btn-wrapper'>
                 <button
-                  onClick={hapusSosialMedia}
-                  className='btn btn-danger ml-1'
+                  onClick={tambahSosialMedia}
+                  className='btn btn-secondary'
                 >
-                  Hapus
+                  Tambah
                 </button>
-              )}
+                {sosialMediaList.length > 1 && (
+                  <button
+                    onClick={hapusSosialMedia}
+                    className='btn btn-danger ml-1'
+                  >
+                    Hapus
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </form>
@@ -216,7 +242,7 @@ const HobiComponent = ({ id, hobiList, setHobiList }) => {
   }
 
   return (
-    <div className='hobi-input'>
+    <div className='form-wrapper hobi-input'>
       <label htmlFor={`hobi-${id}`}>Hobi {id + 1}</label>
       <input
         type='text'
@@ -238,7 +264,7 @@ const SosialMediaComponent = ({ id, sosialMediaList, setSosialMediaList }) => {
   }
 
   return (
-    <div className='sosial-media-input'>
+    <div className='form-wrapper sosial-media-input'>
       <label htmlFor={`sosial-media-${id}`}>Sosial Media {id + 1}</label>
       <input
         type='text'

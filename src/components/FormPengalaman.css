@@ -24,3 +24,9 @@
   margin-bottom: 1rem;
   padding: 0.5rem;
 }
+
+@media (min-width: 640px) {
+  .pengalaman-container {
+    margin: 1rem 0;
+  }
+}

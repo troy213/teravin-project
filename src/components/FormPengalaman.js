@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { formActions } from '../store/form-slice'
 import './FormPengalaman.css'
 
-const FormPengalaman = () => {
+const FormPengalaman = ({ onOpen }) => {
   const [pengalamanList, setPengalamanList] = useState([
     {
       id: 0,
@@ -35,7 +35,8 @@ const FormPengalaman = () => {
 
     if (isEmpty) {
       e.preventDefault()
-      alert('Data masih ada yang kosong')
+      dispatch(formActions.setModalValue('Data masih ada yang kosong'))
+      onOpen()
     } else {
       dispatch(formActions.setPengalaman({ pengalamanList }))
       dispatch(formActions.setCurrentFormPosition(4))
@@ -73,7 +74,7 @@ const FormPengalaman = () => {
       <div className='form-pengalaman-container'>
         <form>
           <div>
-            <p className='bold mb-1'>Pengalaman Kerja</p>
+            <p className='form-title bold mb-1'>Pengalaman Kerja</p>
             {pengalamanList.map((pengalaman) => {
               const { id } = pengalaman
               return (
@@ -85,14 +86,25 @@ const FormPengalaman = () => {
                 />
               )
             })}
-            <button onClick={tambahPengalaman} className='btn btn-secondary'>
-              Tambah
-            </button>
-            {pengalamanList.length > 1 && (
-              <button onClick={hapusPengalaman} className='btn btn-danger ml-1'>
-                Hapus
-              </button>
-            )}
+            <div className='form-wrapper'>
+              <div></div>
+              <div className='btn-wrapper'>
+                <button
+                  onClick={tambahPengalaman}
+                  className='btn btn-secondary'
+                >
+                  Tambah
+                </button>
+                {pengalamanList.length > 1 && (
+                  <button
+                    onClick={hapusPengalaman}
+                    className='btn btn-danger ml-1'
+                  >
+                    Hapus
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
         </form>
       </div>
@@ -117,48 +129,56 @@ const PengalamanComponent = ({ id, pengalamanList, setPengalamanList }) => {
     <div>
       <p>Pengalaman {id + 1}</p>
       <div className='pengalaman-container'>
-        <label htmlFor='nama-perusahaan'>Nama Perusahaan</label>
-        <input
-          type='text'
-          id='nama-perusahaan'
-          onChange={(e) => handlePengalamanValue('namaPerusahaan', e)}
-          value={pengalamanList[id].namaPerusahaan}
-          placeholder='Masukan Nama Perusahaan'
-          className='input'
-        />
-        <label htmlFor='jabatan'>Jabatan</label>
-        <input
-          type='text'
-          id='jabatan'
-          onChange={(e) => handlePengalamanValue('jabatan', e)}
-          value={pengalamanList[id].jabatan}
-          placeholder='Masukan Jabatan'
-          className='input'
-        />
-        <label htmlFor='tahun-masuk-kerja'>Tahun Masuk</label>
-        <input
-          type='number'
-          id='tahun-masuk-kerja'
-          onChange={(e) => handlePengalamanValue('tahunMasuk', e)}
-          value={pengalamanList[id].tahunMasuk}
-          placeholder='Masukan Tahun Masuk'
-          min='1900'
-          max={new Date().getFullYear()}
-          step='1'
-          className='input'
-        />
-        <label htmlFor='tahun-keluar-kerja'>Tahun Keluar</label>
-        <input
-          type='number'
-          id='tahun-keluar-kerja'
-          onChange={(e) => handlePengalamanValue('tahunKeluar', e)}
-          value={pengalamanList[id].tahunKeluar}
-          placeholder='Masukan Tahun Keluar'
-          min='1900'
-          max={new Date().getFullYear()}
-          step='1'
-          className='input'
-        />
+        <div className='form-wrapper'>
+          <label htmlFor='nama-perusahaan'>Nama Perusahaan</label>
+          <input
+            type='text'
+            id='nama-perusahaan'
+            onChange={(e) => handlePengalamanValue('namaPerusahaan', e)}
+            value={pengalamanList[id].namaPerusahaan}
+            placeholder='Masukan Nama Perusahaan'
+            className='input'
+          />
+        </div>
+        <div className='form-wrapper'>
+          <label htmlFor='jabatan'>Jabatan</label>
+          <input
+            type='text'
+            id='jabatan'
+            onChange={(e) => handlePengalamanValue('jabatan', e)}
+            value={pengalamanList[id].jabatan}
+            placeholder='Masukan Jabatan'
+            className='input'
+          />
+        </div>
+        <div className='form-wrapper'>
+          <label htmlFor='tahun-masuk-kerja'>Tahun Masuk</label>
+          <input
+            type='number'
+            id='tahun-masuk-kerja'
+            onChange={(e) => handlePengalamanValue('tahunMasuk', e)}
+            value={pengalamanList[id].tahunMasuk}
+            placeholder='Masukan Tahun Masuk'
+            min='1900'
+            max={new Date().getFullYear()}
+            step='1'
+            className='input'
+          />
+        </div>
+        <div className='form-wrapper'>
+          <label htmlFor='tahun-keluar-kerja'>Tahun Keluar</label>
+          <input
+            type='number'
+            id='tahun-keluar-kerja'
+            onChange={(e) => handlePengalamanValue('tahunKeluar', e)}
+            value={pengalamanList[id].tahunKeluar}
+            placeholder='Masukan Tahun Keluar'
+            min='1900'
+            max={new Date().getFullYear()}
+            step='1'
+            className='input'
+          />
+        </div>
       </div>
     </div>
   )

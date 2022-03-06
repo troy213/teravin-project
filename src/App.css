@@ -23,13 +23,18 @@
 
 .app {
   font-family: 'Poppins', sans-serif;
-  margin: 1rem;
+  padding: 0rem 1rem 1rem;
   min-width: 358px;
 }
 
 .app-title {
-  margin: 2rem 0;
+  padding: 2rem 0;
   color: var(--primary-color);
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 720px;
 }
 
 a {
@@ -129,4 +134,24 @@ a {
 
 .input.is-empty:focus {
   outline: none;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-title {
+  font-size: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .form-wrapper {
+    display: grid;
+    grid-template-columns: 30% 70%;
+  }
+
+  .form-container label {
+    font-size: 1rem;
+  }
 }

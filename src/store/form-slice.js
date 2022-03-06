@@ -30,6 +30,7 @@ const formSlice = createSlice({
     },
     dataArray: JSON.parse(localStorage.getItem('data')) || [],
     currentFormPosition: 1,
+    modalValue: '',
   },
   reducers: {
     setShowForm(state) {
@@ -121,6 +122,9 @@ const formSlice = createSlice({
         keahlianList: [],
       }
       state.currentFormPosition = 1
+    },
+    setModalValue(state, action) {
+      state.modalValue = action.payload
     },
   },
 })

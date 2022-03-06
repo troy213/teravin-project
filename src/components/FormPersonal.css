@@ -7,14 +7,18 @@
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.4);
 }
 
-.form-personal-container form {
+/* .form-personal-container form {
   display: flex;
   flex-direction: column;
-}
+} */
 
 .form-personal-container label {
   font-size: 0.8rem;
   margin-bottom: 0.25rem;
+}
+
+.form-personal-container input {
+  min-height: 36px;
 }
 
 .form-personal-container input,
@@ -27,6 +31,8 @@ textarea {
 
 .form-personal-container textarea {
   height: 150px;
+  min-height: 150px;
+  resize: vertical;
 }
 
 .hobi-container,
