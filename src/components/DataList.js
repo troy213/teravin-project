@@ -1,5 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { formActions } from '../store/form-slice'
+import { ReactComponent as Eye } from '../assets/eye.svg'
+import './DataList.css'
 
 const DataList = ({ setSelectedData }) => {
   const dataArray = useSelector((state) => state.form.dataArray)
@@ -13,7 +15,7 @@ const DataList = ({ setSelectedData }) => {
 
   return (
     <div className='datalist-container'>
-      <table>
+      <table className='m-0-auto'>
         <thead>
           <tr>
             <th>ID No.</th>
@@ -33,7 +35,12 @@ const DataList = ({ setSelectedData }) => {
                     <td>{value.personal.nama}</td>
                     <td>{value.personal.alamat}</td>
                     <td>
-                      <button onClick={() => handleDetailData(index)}>z</button>
+                      <button
+                        onClick={() => handleDetailData(index)}
+                        className='btn btn-primary m-0-auto'
+                      >
+                        <Eye />
+                      </button>
                     </td>
                   </tr>
                 )

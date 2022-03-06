@@ -15,6 +15,7 @@ const FormPersonal = () => {
   // TODO: create validation
   const handleSubmitPersonal = () => {
     dispatch(formActions.setPersonalArray({ hobiList, sosialMediaList }))
+    dispatch(formActions.setCurrentFormPosition(2))
     dispatch(formActions.setShowPersonal())
     dispatch(formActions.setShowRiwayat())
   }
@@ -49,10 +50,10 @@ const FormPersonal = () => {
 
   const hapusSosialMedia = (e) => {
     e.preventDefault()
-    const newHobi = sosialMediaList.filter((hobi) => {
-      return hobi.id !== sosialMediaList[sosialMediaList.length - 1].id
+    const newSosialMedia = sosialMediaList.filter((sosialMedia) => {
+      return sosialMedia.id !== sosialMediaList[sosialMediaList.length - 1].id
     })
-    setSosialMediaList(newHobi)
+    setSosialMediaList(newSosialMedia)
     setSosialMediaCount(sosialMediaList.length - 1)
   }
 
@@ -66,6 +67,7 @@ const FormPersonal = () => {
             id='nama-lengkap'
             onChange={(e) => handleChange('nama', e)}
             value={personal.nama}
+            placeholder='Masukan Nama Lengkap'
           />
           <label htmlFor='tempat-lahir'>Tempat Lahir</label>
           <input
@@ -73,20 +75,22 @@ const FormPersonal = () => {
             id='tempat-lahir'
             onChange={(e) => handleChange('tempatLahir', e)}
             value={personal.tempatLahir}
+            placeholder='Masukan Tempat Lahir'
           />
           <label htmlFor='tanggal-lahir'>Tanggal Lahir</label>
           <input
-            type='text'
+            type='date'
             id='tanggal-lahir'
             onChange={(e) => handleChange('tanggalLahir', e)}
             value={personal.tanggalLahir}
           />
           <label htmlFor='email'>Email</label>
           <input
-            type='text'
+            type='email'
             id='email'
             onChange={(e) => handleChange('email', e)}
             value={personal.email}
+            placeholder='Masukan Email'
           />
           <label htmlFor='phone-number'>Telepon</label>
           <input
@@ -94,16 +98,18 @@ const FormPersonal = () => {
             id='phone-number'
             onChange={(e) => handleChange('telepon', e)}
             value={personal.telepon}
+            placeholder='Masukan Nomor Telepon'
           />
           <label htmlFor='alamat'>Alamat</label>
-          <input
+          <textarea
             type='text'
             id='alamat'
             onChange={(e) => handleChange('alamat', e)}
             value={personal.alamat}
+            placeholder='Masukan Alamat'
           />
           <div className='hobi-container'>
-            <p>Hobi</p>
+            <p className='bold mb-1'>Hobi</p>
             {hobiList.map((hobi) => {
               const { id } = hobi
               return (
@@ -115,13 +121,19 @@ const FormPersonal = () => {
                 />
               )
             })}
-            <button onClick={tambahHobi}>Tambah Hobi</button>
-            {hobiList.length > 0 && (
-              <button onClick={hapusHobi}>Hapus hobi</button>
-            )}
+            <div className='btn-wrapper'>
+              <button onClick={tambahHobi} className='btn btn-secondary'>
+                Tambah
+              </button>
+              {hobiList.length > 0 && (
+                <button onClick={hapusHobi} className='btn btn-danger ml-1'>
+                  Hapus
+                </button>
+              )}
+            </div>
           </div>
           <div className='sosial-media-container'>
-            <p>Sosial Media</p>
+            <p className='bold mb-1'>Sosial Media</p>
             {sosialMediaList.map((sosialMedia) => {
               const { id } = sosialMedia
               return (
@@ -133,15 +145,29 @@ const FormPersonal = () => {
                 />
               )
             })}
-            <button onClick={tambahSosialMedia}>Tambah Sosial Media</button>
-            {hobiList.length > 0 && (
-              <button onClick={hapusSosialMedia}>Hapus Sosial Media</button>
-            )}
+            <div className='btn-wrapper'>
+              <button onClick={tambahSosialMedia} className='btn btn-secondary'>
+                Tambah
+              </button>
+              {sosialMediaList.length > 0 && (
+                <button
+                  onClick={hapusSosialMedia}
+                  className='btn btn-danger ml-1'
+                >
+                  Hapus
+                </button>
+              )}
+            </div>
           </div>
         </form>
       </div>
 
-      <button onClick={handleSubmitPersonal}>Next</button>
+      <button
+        onClick={handleSubmitPersonal}
+        className='btn btn-primary p-1-2 mt-1'
+      >
+        Next
+      </button>
     </>
   )
 }
@@ -154,13 +180,14 @@ const HobiComponent = ({ id, hobiList, setHobiList }) => {
   }
 
   return (
-    <div>
+    <div className='hobi-input'>
       <label htmlFor={`hobi-${id}`}>Hobi {id + 1}</label>
       <input
         type='text'
         id={`hobi-${id}`}
         onChange={(e) => handleHobiValue(e)}
         value={hobiList[id].value}
+        placeholder={`Masukan Hobi ${id + 1}`}
       />
     </div>
   )
@@ -174,13 +201,14 @@ const SosialMediaComponent = ({ id, sosialMediaList, setSosialMediaList }) => {
   }
 
   return (
-    <div>
+    <div className='sosial-media-input'>
       <label htmlFor={`sosial-media-${id}`}>Sosial Media {id + 1}</label>
       <input
         type='text'
         id={`sosial-media-${id}`}
         onChange={(e) => handleSosialMediaValue(e)}
         value={sosialMediaList[id].value}
+        placeholder={`Masukan Link URL Sosial Media ${id + 1}`}
       />
     </div>
   )

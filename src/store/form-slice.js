@@ -29,6 +29,7 @@ const formSlice = createSlice({
       keahlianList: [],
     },
     dataArray: JSON.parse(localStorage.getItem('data')) || [],
+    currentFormPosition: 1,
   },
   reducers: {
     setShowForm(state) {
@@ -72,6 +73,9 @@ const formSlice = createSlice({
       const newItem = action.payload
 
       state.keahlian.keahlianList = newItem.keahlianList
+    },
+    setCurrentFormPosition(state, action) {
+      state.currentFormPosition = action.payload
     },
     saveToLocalStorage(state) {
       const newData = {

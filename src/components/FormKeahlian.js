@@ -46,8 +46,8 @@ const FormKeahlian = () => {
     <>
       <div className='form-keahlian-container'>
         <form>
-          <div className='keahlian-container'>
-            <p>Keahlian</p>
+          <div>
+            <p className='bold mb-1'>Keahlian</p>
             {keahlianList.map((keahlian) => {
               const { id } = keahlian
               return (
@@ -59,14 +59,23 @@ const FormKeahlian = () => {
                 />
               )
             })}
-            <button onClick={tambahKeahlian}>Tambah Keahlian</button>
+            <button onClick={tambahKeahlian} className='btn btn-secondary'>
+              Tambah
+            </button>
             {keahlianList.length > 0 && (
-              <button onClick={hapusKeahlian}>Hapus Keahlian</button>
+              <button onClick={hapusKeahlian} className='btn btn-danger ml-1'>
+                Hapus
+              </button>
             )}
           </div>
         </form>
       </div>
-      <button onClick={handleSubmitKeahlian}>Submit</button>
+      <button
+        onClick={handleSubmitKeahlian}
+        className='btn btn-primary p-1-2 mt-1'
+      >
+        Submit
+      </button>
     </>
   )
 }
@@ -79,13 +88,14 @@ const KeahlianComponent = ({ id, keahlianList, setKeahlianList }) => {
   }
 
   return (
-    <div>
+    <div className='keahlian-container'>
       <label htmlFor={`keahlian-${id}`}>Keahlian {id + 1}</label>
       <input
         type='text'
         id={`keahlian-${id}`}
         onChange={(e) => handleKeahlianValue(e)}
         value={keahlianList[id].value}
+        placeholder={`Masukan Keahlian ${id + 1}`}
       />
     </div>
   )

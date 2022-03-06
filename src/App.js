@@ -20,8 +20,14 @@ const App = () => {
     <div className='app'>
       {!form.showForm && !form.showDetailData && (
         <>
-          <h1>Teravin Test React.JS</h1>
-          <button onClick={handleShowForm}>Add data</button>
+          <h1 className='app-title'>Teravin Test React.JS</h1>
+          <button
+            onClick={handleShowForm}
+            className='btn btn-primary flex-center'
+          >
+            <span className='bold'>+</span>
+            Add data
+          </button>
           <DataList setSelectedData={setSelectedData} />
         </>
       )}
