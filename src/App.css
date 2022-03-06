@@ -122,3 +122,11 @@ a {
   justify-content: center;
   align-items: center;
 }
+
+.input.is-empty {
+  border: 3px solid var(--danger);
+}
+
+.input.is-empty:focus {
+  outline: none;
+}

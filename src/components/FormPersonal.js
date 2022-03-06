@@ -8,16 +8,46 @@ const FormPersonal = () => {
   const [hobiCount, setHobiCount] = useState(1)
   const [sosialMediaList, setSosialMediaList] = useState([{ id: 0, value: '' }])
   const [sosialMediaCount, setSosialMediaCount] = useState(1)
+  let isEmpty = false
 
   const personal = useSelector((state) => state.form.personal)
   const dispatch = useDispatch()
 
-  // TODO: create validation
-  const handleSubmitPersonal = () => {
-    dispatch(formActions.setPersonalArray({ hobiList, sosialMediaList }))
-    dispatch(formActions.setCurrentFormPosition(2))
-    dispatch(formActions.setShowPersonal())
-    dispatch(formActions.setShowRiwayat())
+  const validateEmail = (email) => {
+    const regex =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    return regex.test(String(email).toLowerCase())
+  }
+
+  const validation = () => {
+    const input = document.querySelectorAll('.input')
+    input.forEach((input) => {
+      if (input.value === '') {
+        input.className = 'input is-empty'
+        isEmpty = true
+      } else {
+        input.className = 'input'
+      }
+    })
+  }
+
+  const handleSubmitPersonal = (e) => {
+    validation()
+
+    if (isEmpty) {
+      e.preventDefault()
+      alert('Data masih ada yang kosong')
+    } else if (validateEmail(personal.email)) {
+      dispatch(formActions.setPersonalArray({ hobiList, sosialMediaList }))
+      dispatch(formActions.setCurrentFormPosition(2))
+      dispatch(formActions.setShowPersonal())
+      dispatch(formActions.setShowRiwayat())
+    } else {
+      e.preventDefault()
+      const email = document.getElementById('email')
+      email.className = 'input is-empty'
+      alert('Format email yang anda masukan invalid')
+    }
   }
 
   const handleChange = (input, e) => {
@@ -68,6 +98,7 @@ const FormPersonal = () => {
             onChange={(e) => handleChange('nama', e)}
             value={personal.nama}
             placeholder='Masukan Nama Lengkap'
+            className='input'
           />
           <label htmlFor='tempat-lahir'>Tempat Lahir</label>
           <input
@@ -76,6 +107,7 @@ const FormPersonal = () => {
             onChange={(e) => handleChange('tempatLahir', e)}
             value={personal.tempatLahir}
             placeholder='Masukan Tempat Lahir'
+            className='input'
           />
           <label htmlFor='tanggal-lahir'>Tanggal Lahir</label>
           <input
@@ -83,6 +115,7 @@ const FormPersonal = () => {
             id='tanggal-lahir'
             onChange={(e) => handleChange('tanggalLahir', e)}
             value={personal.tanggalLahir}
+            className='input'
           />
           <label htmlFor='email'>Email</label>
           <input
@@ -91,14 +124,16 @@ const FormPersonal = () => {
             onChange={(e) => handleChange('email', e)}
             value={personal.email}
             placeholder='Masukan Email'
+            className='input'
           />
           <label htmlFor='phone-number'>Telepon</label>
           <input
-            type='text'
+            type='number'
             id='phone-number'
             onChange={(e) => handleChange('telepon', e)}
             value={personal.telepon}
             placeholder='Masukan Nomor Telepon'
+            className='input'
           />
           <label htmlFor='alamat'>Alamat</label>
           <textarea
@@ -107,6 +142,7 @@ const FormPersonal = () => {
             onChange={(e) => handleChange('alamat', e)}
             value={personal.alamat}
             placeholder='Masukan Alamat'
+            className='input'
           />
           <div className='hobi-container'>
             <p className='bold mb-1'>Hobi</p>
@@ -125,7 +161,7 @@ const FormPersonal = () => {
               <button onClick={tambahHobi} className='btn btn-secondary'>
                 Tambah
               </button>
-              {hobiList.length > 0 && (
+              {hobiList.length > 1 && (
                 <button onClick={hapusHobi} className='btn btn-danger ml-1'>
                   Hapus
                 </button>
@@ -149,7 +185,7 @@ const FormPersonal = () => {
               <button onClick={tambahSosialMedia} className='btn btn-secondary'>
                 Tambah
               </button>
-              {sosialMediaList.length > 0 && (
+              {sosialMediaList.length > 1 && (
                 <button
                   onClick={hapusSosialMedia}
                   className='btn btn-danger ml-1'
@@ -188,6 +224,7 @@ const HobiComponent = ({ id, hobiList, setHobiList }) => {
         onChange={(e) => handleHobiValue(e)}
         value={hobiList[id].value}
         placeholder={`Masukan Hobi ${id + 1}`}
+        className='input'
       />
     </div>
   )
@@ -209,6 +246,7 @@ const SosialMediaComponent = ({ id, sosialMediaList, setSosialMediaList }) => {
         onChange={(e) => handleSosialMediaValue(e)}
         value={sosialMediaList[id].value}
         placeholder={`Masukan Link URL Sosial Media ${id + 1}`}
+        className='input'
       />
     </div>
   )

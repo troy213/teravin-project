@@ -14,15 +14,34 @@ const FormRiwayat = () => {
     },
   ])
   const [riwayatCount, setRiwayatCount] = useState(1)
+  let isEmpty = false
 
   const dispatch = useDispatch()
 
-  // TODO: create validation
-  const handleSubmitRiwayat = () => {
-    dispatch(formActions.setRiwayat({ riwayatList }))
-    dispatch(formActions.setCurrentFormPosition(3))
-    dispatch(formActions.setShowRiwayat())
-    dispatch(formActions.setShowPengalaman())
+  const validation = () => {
+    const input = document.querySelectorAll('.input')
+    input.forEach((input) => {
+      if (input.value === '') {
+        input.className = 'input is-empty'
+        isEmpty = true
+      } else {
+        input.className = 'input'
+      }
+    })
+  }
+
+  const handleSubmitRiwayat = (e) => {
+    validation()
+
+    if (isEmpty) {
+      e.preventDefault()
+      alert('Data masih ada yang kosong')
+    } else {
+      dispatch(formActions.setRiwayat({ riwayatList }))
+      dispatch(formActions.setCurrentFormPosition(3))
+      dispatch(formActions.setShowRiwayat())
+      dispatch(formActions.setShowPengalaman())
+    }
   }
 
   const tambahRiwayat = (e) => {
@@ -69,7 +88,7 @@ const FormRiwayat = () => {
             <button onClick={tambahRiwayat} className='btn btn-secondary'>
               Tambah
             </button>
-            {riwayatList.length > 0 && (
+            {riwayatList.length > 1 && (
               <button onClick={hapusRiwayat} className='btn btn-danger ml-1'>
                 Hapus
               </button>
@@ -105,6 +124,7 @@ const RiwayatComponent = ({ id, riwayatList, setRiwayatList }) => {
           onChange={(e) => handleRiwayatValue('namaInstitusi', e)}
           value={riwayatList[id].namaInstitusi}
           placeholder='Masukan Nama Sekolah/Universitas'
+          className='input'
         />
         <label htmlFor='jurusan'>Jurusan</label>
         <input
@@ -113,6 +133,7 @@ const RiwayatComponent = ({ id, riwayatList, setRiwayatList }) => {
           onChange={(e) => handleRiwayatValue('jurusan', e)}
           value={riwayatList[id].jurusan}
           placeholder='Masukan Jurusan'
+          className='input'
         />
         <label htmlFor='tahun-masuk'>Tahun Masuk</label>
         <input
@@ -122,8 +143,9 @@ const RiwayatComponent = ({ id, riwayatList, setRiwayatList }) => {
           value={riwayatList[id].tahunMasuk}
           placeholder='Masukan Tahun Masuk'
           min='1900'
-          max='2022'
+          max={new Date().getFullYear()}
           step='1'
+          className='input'
         />
         <label htmlFor='tahun-keluar'>Tahun Keluar</label>
         <input
@@ -133,8 +155,9 @@ const RiwayatComponent = ({ id, riwayatList, setRiwayatList }) => {
           value={riwayatList[id].tahunKeluar}
           placeholder='Masukan Tahun Keluar'
           min='1900'
-          max='2022'
+          max={new Date().getFullYear()}
           step='1'
+          className='input'
         />
       </div>
     </div>

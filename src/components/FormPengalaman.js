@@ -14,16 +14,34 @@ const FormPengalaman = () => {
     },
   ])
   const [pengalamanCount, setPengalamanCount] = useState(1)
+  let isEmpty = false
 
-  // TODO: create useSelector pengalaman
   const dispatch = useDispatch()
 
-  // TODO: create validation
-  const handleSubmitPengalaman = () => {
-    dispatch(formActions.setPengalaman({ pengalamanList }))
-    dispatch(formActions.setCurrentFormPosition(4))
-    dispatch(formActions.setShowPengalaman())
-    dispatch(formActions.setShowKeahlian())
+  const validation = () => {
+    const input = document.querySelectorAll('.input')
+    input.forEach((input) => {
+      if (input.value === '') {
+        input.className = 'input is-empty'
+        isEmpty = true
+      } else {
+        input.className = 'input'
+      }
+    })
+  }
+
+  const handleSubmitPengalaman = (e) => {
+    validation()
+
+    if (isEmpty) {
+      e.preventDefault()
+      alert('Data masih ada yang kosong')
+    } else {
+      dispatch(formActions.setPengalaman({ pengalamanList }))
+      dispatch(formActions.setCurrentFormPosition(4))
+      dispatch(formActions.setShowPengalaman())
+      dispatch(formActions.setShowKeahlian())
+    }
   }
 
   const tambahPengalaman = (e) => {
@@ -70,7 +88,7 @@ const FormPengalaman = () => {
             <button onClick={tambahPengalaman} className='btn btn-secondary'>
               Tambah
             </button>
-            {pengalamanList.length > 0 && (
+            {pengalamanList.length > 1 && (
               <button onClick={hapusPengalaman} className='btn btn-danger ml-1'>
                 Hapus
               </button>
@@ -106,6 +124,7 @@ const PengalamanComponent = ({ id, pengalamanList, setPengalamanList }) => {
           onChange={(e) => handlePengalamanValue('namaPerusahaan', e)}
           value={pengalamanList[id].namaPerusahaan}
           placeholder='Masukan Nama Perusahaan'
+          className='input'
         />
         <label htmlFor='jabatan'>Jabatan</label>
         <input
@@ -114,6 +133,7 @@ const PengalamanComponent = ({ id, pengalamanList, setPengalamanList }) => {
           onChange={(e) => handlePengalamanValue('jabatan', e)}
           value={pengalamanList[id].jabatan}
           placeholder='Masukan Jabatan'
+          className='input'
         />
         <label htmlFor='tahun-masuk-kerja'>Tahun Masuk</label>
         <input
@@ -125,6 +145,7 @@ const PengalamanComponent = ({ id, pengalamanList, setPengalamanList }) => {
           min='1900'
           max={new Date().getFullYear()}
           step='1'
+          className='input'
         />
         <label htmlFor='tahun-keluar-kerja'>Tahun Keluar</label>
         <input
@@ -136,6 +157,7 @@ const PengalamanComponent = ({ id, pengalamanList, setPengalamanList }) => {
           min='1900'
           max={new Date().getFullYear()}
           step='1'
+          className='input'
         />
       </div>
     </div>

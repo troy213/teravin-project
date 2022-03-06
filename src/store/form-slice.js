@@ -120,6 +120,7 @@ const formSlice = createSlice({
         showKeahlian: false,
         keahlianList: [],
       }
+      state.currentFormPosition = 1
     },
   },
 })

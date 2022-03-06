@@ -11,14 +11,34 @@ const FormKeahlian = () => {
     },
   ])
   const [keahlianCount, setKeahlianCount] = useState(1)
+  let isEmpty = false
 
   const dispatch = useDispatch()
 
-  const handleSubmitKeahlian = () => {
-    dispatch(formActions.setKeahlian({ keahlianList }))
-    dispatch(formActions.saveToLocalStorage())
-    dispatch(formActions.clearAllForm())
-    dispatch(formActions.setShowForm())
+  const validation = () => {
+    const input = document.querySelectorAll('.input')
+    input.forEach((input) => {
+      if (input.value === '') {
+        input.className = 'input is-empty'
+        isEmpty = true
+      } else {
+        input.className = 'input'
+      }
+    })
+  }
+
+  const handleSubmitKeahlian = (e) => {
+    validation()
+
+    if (isEmpty) {
+      e.preventDefault()
+      alert('Data masih ada yang kosong')
+    } else {
+      dispatch(formActions.setKeahlian({ keahlianList }))
+      dispatch(formActions.saveToLocalStorage())
+      dispatch(formActions.clearAllForm())
+      dispatch(formActions.setShowForm())
+    }
   }
 
   const tambahKeahlian = (e) => {
@@ -62,7 +82,7 @@ const FormKeahlian = () => {
             <button onClick={tambahKeahlian} className='btn btn-secondary'>
               Tambah
             </button>
-            {keahlianList.length > 0 && (
+            {keahlianList.length > 1 && (
               <button onClick={hapusKeahlian} className='btn btn-danger ml-1'>
                 Hapus
               </button>
@@ -96,6 +116,7 @@ const KeahlianComponent = ({ id, keahlianList, setKeahlianList }) => {
         onChange={(e) => handleKeahlianValue(e)}
         value={keahlianList[id].value}
         placeholder={`Masukan Keahlian ${id + 1}`}
+        className='input'
       />
     </div>
   )
